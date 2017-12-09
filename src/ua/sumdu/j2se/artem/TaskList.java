@@ -54,8 +54,9 @@ public abstract class TaskList implements Cloneable,Iterable<Task> {
                 if (count == 0) {
                     throw new IllegalStateException("Use remove() before next()!");
                 }
-                TaskList.this.remove(getTask(count));
-                count--;
+                TaskList.this.remove(getTask(--count));
+                //count--;
+
             }
         };
     }

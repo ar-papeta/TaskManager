@@ -1,5 +1,7 @@
 package ua.sumdu.j2se.artem;
 
+import java.util.Iterator;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -27,9 +29,20 @@ public class Main {
     a.add(t6);
         a.incoming(0,100);
         l.incoming(0,100);
+        Iterator<Task> iter = l.iterator();
+        System.out.println("-----------------------------------");
+        System.out.println(iter.next());
+        iter.remove();
+//        while(iter.hasNext()){
+//            System.out.println(iter.next());
+//        }
+//        System.out.println("-----------------------------------");
 
-
-
+        System.out.println("-----------------------------------");
+        while(iter.hasNext()){
+            System.out.println(iter.next());
+        }
+        System.out.println("-----------------------------------");
 
 
 
