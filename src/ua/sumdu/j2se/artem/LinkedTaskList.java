@@ -1,13 +1,15 @@
 package ua.sumdu.j2se.artem;
+import java.util.Iterator;
 
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Class which work with list of task objects
  * @author Papeta Artem
  */
-public class LinkedTaskList extends TaskList implements Cloneable{
+public class LinkedTaskList extends TaskList {
     private Element tail = null;
     private Element head = null;
 
@@ -116,31 +118,38 @@ public class LinkedTaskList extends TaskList implements Cloneable{
     }
 
 
-    public Iterator<Task> iterator() {
+    @Override
+    public String toString() {
+        return "LinkedTaskList{}";
+    }
 
-        return new Iterator<Task>() {
-            private Element lastReturned;
-            private Element next;
-            private int nextIndex;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LinkedTaskList)) return false;
 
+        LinkedTaskList tasks = (LinkedTaskList) o;
 
-            public Task next() {
-                if (!hasNext()) {
-                    throw new java.util.NoSuchElementException("Out of list");
-                }
+        if (tail != null ? !tail.equals(tasks.tail) : tasks.tail != null) return false;
+        return head != null ? head.equals(tasks.head) : tasks.head == null;
+    }
 
-                Task result = new Task();
-                result = LinkedTaskList.Element(LinkedTaskList.Element(current));
-                current = LinkedTaskList.Element;
-                return result;
-            }
-            public boolean hasNext() {
-                return current.hasNext();
-            }
-
-
-        };
+    @Override
+    public int hashCode() {
+        int result = tail.hashCode();
+        result = 31 * result + head.hashCode();
+        return result;
     }
 
 
+
+
+//    @Override
+//    public LinkedTaskList clone(){
+//        LinkedTaskList out = null;
+//        if(size() > 0)
+//            for (Task task : this)
+//                out.add(task);
+//        return out;
+//    }
 }
