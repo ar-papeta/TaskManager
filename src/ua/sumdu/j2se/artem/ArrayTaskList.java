@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 public class ArrayTaskList extends TaskList implements Iterable<Task> {
     public static final int EXTRA_SIZE = 5;//x0.75
-    private Task[] taskArray = new Task[size];
+    Task[] taskArray = new Task[size];
 
     @Override
     public void add(Task task) {
@@ -46,40 +46,6 @@ public class ArrayTaskList extends TaskList implements Iterable<Task> {
             return taskArray[index];
     }
 
-
-    @Override
-    public Iterator<Task> iterator() {
-        return new Iterator<>() {
-            private int count;
-
-            public boolean hasNext() {
-                return size() > count && getTask(count) != null;
-            }
-
-            public Task next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException("Out of list");
-                }
-
-                Task result = getTask(count);
-                count++;
-
-                return result;
-            }
-
-            public void remove() {
-                if (count == 0) {
-                    throw new IllegalStateException("Use remove() before next()!");
-                }
-
-                for (int i = count - 1; i < size(); i++) {
-                    taskArray[i] = taskArray[(i + 1)];
-                }
-                count--;
-            }
-        };
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,6 +79,39 @@ public class ArrayTaskList extends TaskList implements Iterable<Task> {
         }
 
         return result;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+            private int count;
+
+            public boolean hasNext() {
+                return size() > count && getTask(count) != null;
+            }
+
+            public Task next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Out of list");
+                }
+
+                Task result = getTask(count);
+                count++;
+
+                return result;
+            }
+
+            public void remove() {
+                if (count == 0) {
+                    throw new IllegalStateException("Use remove() before next()!");
+                }
+
+                for (int i = count - 1; i < size(); i++) {
+                    taskArray[i] = taskArray[(i + 1)];
+                }
+                count--;
+            }
+        };
     }
 
 }

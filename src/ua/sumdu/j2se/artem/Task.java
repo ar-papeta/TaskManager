@@ -63,7 +63,7 @@ public class Task implements Cloneable {
      * set time for repeated tasks
      */
     public void setTime(int start, int end, int interval) {
-        if (start >= end || start < 1)
+        if (start > end || start < 1)
             throw new IllegalArgumentException("Invalid input start/end");
         else {
             this.start = start;
@@ -142,7 +142,7 @@ public class Task implements Cloneable {
     public Task(String title, int time) {
         if (title == null)
             throw new NullPointerException("Task title can not be null");
-        else if (time < 1)
+        else if (time < 0)
             throw new IllegalArgumentException("Invalid input time");
         else {
             this.title = title;
@@ -156,7 +156,7 @@ public class Task implements Cloneable {
     public Task(String title, int start, int end, int interval) {
         if (title == null) {
             throw new NullPointerException("Task title can not be null");
-        } else if (start >= end || start < 1) {
+        } else if (start > end || start < 0) {
             throw new IllegalArgumentException("Invalid input start/end");
         } else {
             this.title = title;
@@ -174,11 +174,13 @@ public class Task implements Cloneable {
     public String toString() {
         if (isRepeated()) {
             return
+
+
                     "\" " + getTitle() + "\" start time = " + getStartTime() + " end time = " + getEndTime() + " interval = " + getRepeatInterval() + " active = " + isActive();
         }
+
         return "\" " + getTitle() + "\" " + getTime() + " active = " + isActive() + "\n";
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,17 +1,14 @@
 package ua.sumdu.j2se.artem;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Class which work with list of task objects
  *
  * @author Papeta Artem
  */
-public class LinkedTaskList extends TaskList {
+public class LinkedTaskList extends TaskList implements Cloneable, Iterable<Task> {
     private Element tail = null;
     private Element head = null;
-
 
     /**
      * Add task to list
@@ -71,7 +68,6 @@ public class LinkedTaskList extends TaskList {
         return false;
     }
 
-
     /**
      * @param index Index of element in list
      * @return Task which have index "index"
@@ -105,7 +101,7 @@ public class LinkedTaskList extends TaskList {
         Element next;
         Task value;
 
-        Element(Task value, Element next) {
+        public Element(Task value, Element next) {
             if (value == null)
                 throw new NullPointerException("Task(value) can not be null.");
             this.value = value;
@@ -113,37 +109,44 @@ public class LinkedTaskList extends TaskList {
         }
     }
 
-
     @Override
     public String toString() {
         return "LinkedTaskList{}";
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LinkedTaskList)) return false;
-
-        LinkedTaskList tasks = (LinkedTaskList) o;
-
-        if (tail != null ? !tail.equals(tasks.tail) : tasks.tail != null) return false;
-        return head != null ? head.equals(tasks.head) : tasks.head == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = tail.hashCode();
-        result = 31 * result + head.hashCode();
-        return result;
-    }
-
-    @Override
     public LinkedTaskList clone() {
-        LinkedTaskList out = null;
+        LinkedTaskList out = new LinkedTaskList();
         if (size() > 0)
             for (Task task : this)
                 out.add(task);
         return out;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        for (int i = 0; i < size(); i++)
+            result = prime * result + getTask(i).hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        boolean eql = false;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LinkedTaskList list = (LinkedTaskList) o;
+        if (size() != list.size())
+            return false;
+
+        for (int i = 0; i < size(); i++) {
+            if (getTask(i).equals(list.getTask(i)))
+                eql = true;
+        }
+        return eql;
     }
 
 }
