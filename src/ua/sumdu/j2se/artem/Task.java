@@ -1,6 +1,8 @@
 package ua.sumdu.j2se.artem;
+
 /**
  * description of basically task, its status, time of alerts
+ *
  * @author Papeta
  */
 public class Task implements Cloneable {
@@ -37,14 +39,14 @@ public class Task implements Cloneable {
      * set a title
      */
     public void setTitle(String title) {
-        if(title == null)
+        if (title == null)
             throw new NullPointerException("Task title can not be null!");
         else
             this.title = title;
     }
 
     /**
-     *  set time for non-repeated tasks
+     * set time for non-repeated tasks
      */
     public void setTime(int time) {
         if (time < 1)
@@ -58,7 +60,7 @@ public class Task implements Cloneable {
     }
 
     /**
-     *  set time for repeated tasks
+     * set time for repeated tasks
      */
     public void setTime(int start, int end, int interval) {
         if (start >= end || start < 1)
@@ -72,7 +74,7 @@ public class Task implements Cloneable {
     }
 
     /**
-     *  @return time for all tasks
+     * @return time for all tasks
      */
     public int getTime() {
         return this.time;
@@ -95,7 +97,7 @@ public class Task implements Cloneable {
     /**
      * check repetition of tasks
      */
-    public boolean isRepeated(){
+    public boolean isRepeated() {
         return (interval > 0);
     }
 
@@ -110,24 +112,23 @@ public class Task implements Cloneable {
      * @return time of the next alerts
      */
     public int nextTimeAfter(int time) {
-        if(!active) {
+        if (!active) {
             return -1;
         }
-        if(this.interval == 0) {
-            if(time < this.time)
+        if (this.interval == 0) {
+            if (time < this.time)
                 return this.time;
             else
                 return -1;
-        }
-        else {
-            if(time >= this.end)
+        } else {
+            if (time >= this.end)
                 return -1;
             else {
                 int alertTime = this.start;
-                while(alertTime <= time) {
+                while (alertTime <= time) {
                     alertTime += this.interval;
                 }
-                if(alertTime <= this.end)
+                if (alertTime <= this.end)
                     return alertTime;
                 else
                     return -1;
@@ -166,13 +167,11 @@ public class Task implements Cloneable {
         }
     }
 
-    public Task clone() throws CloneNotSupportedException
-    {
-        return (Task)super.clone();
+    public Task clone() throws CloneNotSupportedException {
+        return (Task) super.clone();
     }
 
-    public String toString()
-    {
+    public String toString() {
         if (isRepeated()) {
             return
                     "\" " + getTitle() + "\" start time = " + getStartTime() + " end time = " + getEndTime() + " interval = " + getRepeatInterval() + " active = " + isActive();

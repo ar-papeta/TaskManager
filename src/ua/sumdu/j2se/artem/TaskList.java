@@ -1,8 +1,9 @@
 package ua.sumdu.j2se.artem;
+
 import java.util.*;
 
 
-public abstract class TaskList implements Cloneable,Iterable<Task> {
+public abstract class TaskList implements Cloneable, Iterable<Task> {
 
     protected Task[] list = new Task[10];
     public static int EXTRA_SIZE = 5;//x0.75
@@ -12,14 +13,14 @@ public abstract class TaskList implements Cloneable,Iterable<Task> {
 
     public abstract boolean remove(Task task);
 
-    public  int size() {
+    public int size() {
         return size;
     }
 
     public abstract Task getTask(int index);
 
     public TaskList incoming(int from, int to) {
-        TaskList incomingList ;
+        TaskList incomingList;
         if ((this instanceof ArrayTaskList)) {
             incomingList = new ArrayTaskList();
         } else {
@@ -35,7 +36,7 @@ public abstract class TaskList implements Cloneable,Iterable<Task> {
     }
 
     @Override
-    public Iterator<Task> iterator(){
+    public Iterator<Task> iterator() {
         return new Iterator<Task>() {
             int count = 0;
 
@@ -50,7 +51,7 @@ public abstract class TaskList implements Cloneable,Iterable<Task> {
             }
 
             @Override
-            public void remove(){
+            public void remove() {
                 if (count == 0) {
                     throw new IllegalStateException("Use remove() before next()!");
                 }
@@ -61,4 +62,4 @@ public abstract class TaskList implements Cloneable,Iterable<Task> {
         };
     }
 
- }
+}

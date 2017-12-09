@@ -1,15 +1,16 @@
 package ua.sumdu.j2se.artem;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 
-public class ArrayTaskList extends TaskList implements Iterable<Task>  {
+public class ArrayTaskList extends TaskList implements Iterable<Task> {
     public static final int EXTRA_SIZE = 5;//x0.75
     private Task[] taskArray = new Task[size];
 
     @Override
-    public void add(Task task){
+    public void add(Task task) {
         if (task == null)
             throw new NullPointerException("Task can not be null.");
         else {
@@ -19,8 +20,9 @@ public class ArrayTaskList extends TaskList implements Iterable<Task>  {
             taskArray[size++] = task;
         }
     }
+
     @Override
-    public boolean remove(Task task){
+    public boolean remove(Task task) {
         if (task == null)
             throw new NullPointerException("Task can not be null.");
         for (int i = 0; i < size(); i++) {
@@ -45,50 +47,38 @@ public class ArrayTaskList extends TaskList implements Iterable<Task>  {
     }
 
 
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<>() {
+            private int count;
 
-@Override
-public Iterator<Task> iterator(){
-    return new Iterator<>() {
-        private int count;
-
-        public boolean hasNext() {
-            return size() > count && getTask(count) != null;
-        }
-
-        public Task next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException("Out of list");
+            public boolean hasNext() {
+                return size() > count && getTask(count) != null;
             }
 
-            Task result = getTask(count);
-            count++;
+            public Task next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Out of list");
+                }
 
-            return result;
-        }
+                Task result = getTask(count);
+                count++;
 
-        public void remove() {
-            if (count == 0) {
-                throw new IllegalStateException("Use remove() before next()!");
+                return result;
             }
 
-            for (int i = count - 1; i < size(); i++) {
-                taskArray[i] = taskArray[(i + 1)];
+            public void remove() {
+                if (count == 0) {
+                    throw new IllegalStateException("Use remove() before next()!");
+                }
+
+                for (int i = count - 1; i < size(); i++) {
+                    taskArray[i] = taskArray[(i + 1)];
+                }
+                count--;
             }
-            count--;
-        }
-    };
-}
-
-//
-//        public boolean hasNext()
-//        {
-//            if (size() > count) {
-//                return true;
-//            }
-//            return false;
-//        }
-//    }
-
+        };
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -114,10 +104,9 @@ public Iterator<Task> iterator(){
     }
 
     public ArrayTaskList clone()
-            throws CloneNotSupportedException
-    {
-        ArrayTaskList result = (ArrayTaskList)super.clone();
-        taskArray = ((Task[])taskArray.clone());
+            throws CloneNotSupportedException {
+        ArrayTaskList result = (ArrayTaskList) super.clone();
+        taskArray = ((Task[]) taskArray.clone());
 
         for (int i = 0; i < size(); i++) {
             taskArray[i] = taskArray[i].clone();

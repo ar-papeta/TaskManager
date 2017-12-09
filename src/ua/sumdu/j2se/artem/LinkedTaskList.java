@@ -1,12 +1,11 @@
 package ua.sumdu.j2se.artem;
-import java.util.Iterator;
-
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * Class which work with list of task objects
+ *
  * @author Papeta Artem
  */
 public class LinkedTaskList extends TaskList {
@@ -16,6 +15,7 @@ public class LinkedTaskList extends TaskList {
 
     /**
      * Add task to list
+     *
      * @param task Task to add
      */
     @Override
@@ -23,8 +23,7 @@ public class LinkedTaskList extends TaskList {
         Element element = new Element(task, null);
         if (task == null) {
             throw new NullPointerException("Task can not be null");
-        }
-        else if (head == null) {
+        } else if (head == null) {
             head = element;
             tail = head;
             size++;
@@ -37,13 +36,14 @@ public class LinkedTaskList extends TaskList {
 
     /**
      * Remove task from list
+     *
      * @param task Task to remove
      */
     public boolean remove(Task task) {
-        if(head == null)                     //список пустой
+        if (head == null)                     //список пустой
             return false;
         if (head.equals(tail)) {                  //в списке 1 елемент
-            if(head.value.equals(task)) {
+            if (head.value.equals(task)) {
                 head = null;
                 tail = null;
                 size--;
@@ -58,7 +58,7 @@ public class LinkedTaskList extends TaskList {
         Element t = head;
         while (t.next != null) {
             if (t.next.value.equals(task)) {
-                if(tail.equals(t.next))      //если он последний
+                if (tail.equals(t.next))      //если он последний
                 {
                     tail = t;           //то переключаем указатель на последний элемент на текущий
                 }
@@ -70,7 +70,6 @@ public class LinkedTaskList extends TaskList {
         }
         return false;
     }
-
 
 
     /**
@@ -99,9 +98,6 @@ public class LinkedTaskList extends TaskList {
     }
 
 
-
-
-
     /**
      * Class which helps in implementing of linked list
      */
@@ -109,7 +105,7 @@ public class LinkedTaskList extends TaskList {
         Element next;
         Task value;
 
-         Element(Task value, Element next) {
+        Element(Task value, Element next) {
             if (value == null)
                 throw new NullPointerException("Task(value) can not be null.");
             this.value = value;
@@ -140,11 +136,11 @@ public class LinkedTaskList extends TaskList {
         result = 31 * result + head.hashCode();
         return result;
     }
-    
+
     @Override
-    public LinkedTaskList clone(){
+    public LinkedTaskList clone() {
         LinkedTaskList out = null;
-        if(size() > 0)
+        if (size() > 0)
             for (Task task : this)
                 out.add(task);
         return out;
