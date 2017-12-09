@@ -109,7 +109,7 @@ public class LinkedTaskList extends TaskList {
         Element next;
         Task value;
 
-        public Element(Task value, Element next) {
+         Element(Task value, Element next) {
             if (value == null)
                 throw new NullPointerException("Task(value) can not be null.");
             this.value = value;
@@ -140,17 +140,14 @@ public class LinkedTaskList extends TaskList {
         result = 31 * result + head.hashCode();
         return result;
     }
-
-
-
-
-//    @Override
-//    public LinkedTaskList clone(){
-//        LinkedTaskList out = null;
-//        if(size() > 0)
-//            for (Task task : this)
-//                out.add(task);
-//        return out;
-//    }
     
+    @Override
+    public LinkedTaskList clone(){
+        LinkedTaskList out = null;
+        if(size() > 0)
+            for (Task task : this)
+                out.add(task);
+        return out;
+    }
+
 }

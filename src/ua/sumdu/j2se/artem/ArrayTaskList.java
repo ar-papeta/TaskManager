@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 public class ArrayTaskList extends TaskList implements Iterable<Task>  {
     public static final int EXTRA_SIZE = 5;//x0.75
-    Task[] taskArray = new Task[size];
+    private Task[] taskArray = new Task[size];
 
     @Override
     public void add(Task task){
@@ -45,34 +45,40 @@ public class ArrayTaskList extends TaskList implements Iterable<Task>  {
     }
 
 
-//    public ArrayTaskListIterator iterator() { return new ArrayTaskListIterator(); }
-//
-//    public class ArrayTaskListIterator implements Iterator<Task> {
-//        private int count;
-//
-//        public ArrayTaskListIterator() {}
-//
-//        public Task next() {
-//            if (!hasNext()) {
-//                throw new NoSuchElementException("Out of list");
-//            }
-//
-//            Task result = getTask(count);
-//            count ++;
-//
-//            return result;
-//        }
-//
-//        public void remove() {
-//            if (count == 0) {
-//                throw new IllegalStateException("Use remove() before next()!");
-//            }
-//
-//            for (int i = count - 1; i < size(); i++) {
-//                taskArray[i] = taskArray[(i + 1)];
-//            }
-//            count --;
-//        }
+
+@Override
+public Iterator<Task> iterator(){
+    return new Iterator<>() {
+        private int count;
+
+        public boolean hasNext() {
+            return size() > count && getTask(count) != null;
+        }
+
+        public Task next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("Out of list");
+            }
+
+            Task result = getTask(count);
+            count++;
+
+            return result;
+        }
+
+        public void remove() {
+            if (count == 0) {
+                throw new IllegalStateException("Use remove() before next()!");
+            }
+
+            for (int i = count - 1; i < size(); i++) {
+                taskArray[i] = taskArray[(i + 1)];
+            }
+            count--;
+        }
+    };
+}
+
 //
 //        public boolean hasNext()
 //        {

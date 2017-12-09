@@ -29,7 +29,7 @@ public class Main {
     a.add(t6);
         a.incoming(0,100);
         l.incoming(0,100);
-        Iterator<Task> iter = l.iterator();
+        Iterator<Task> iter = a.iterator();
         System.out.println("-----------------------------------");
         System.out.println(iter.next());
         iter.remove();
