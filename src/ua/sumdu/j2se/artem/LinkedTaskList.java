@@ -1,6 +1,8 @@
 package ua.sumdu.j2se.artem;
 
 
+import java.util.Iterator;
+
 /**
  * Class which work with list of task objects
  *
@@ -108,10 +110,22 @@ public class LinkedTaskList extends TaskList implements Cloneable, Iterable<Task
             this.next = next;
         }
     }
-
+    
     @Override
     public String toString() {
-        return "LinkedTaskList{}";
+        Iterator<Task> it = iterator();
+        if (!it.hasNext())
+            return "[]";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (; ; ) {
+            Task e = it.next();
+            sb.append(e.equals(this) ? "(this Collection)" : e);
+            if (!it.hasNext())
+                return sb.append(']').toString();
+            sb.append(',').append(' ');
+        }
     }
 
     @Override

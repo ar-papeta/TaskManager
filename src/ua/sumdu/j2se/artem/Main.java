@@ -20,6 +20,8 @@ public class Main {
         l.add(t4);
         l.add(t5);
         l.add(t6);
+        System.out.println(l.toString());
+        System.out.println("************");
 
         a.add(t1);
         a.add(t2);
@@ -27,22 +29,23 @@ public class Main {
         a.add(t4);
         a.add(t5);
         a.add(t6);
-        a.incoming(0, 100);
-        l.incoming(0, 100);
-        Iterator<Task> iter = a.iterator();
-        System.out.println("-----------------------------------");
-        System.out.println(iter.next());
-        iter.remove();
-//        while(iter.hasNext()){
-//            System.out.println(iter.next());
+        System.out.println(a.toString());
+//        a.incoming(0, 100);
+//        l.incoming(0, 100);
+//        Iterator<Task> iter = a.iterator();
+//        System.out.println("-----------------------------------");
+//        System.out.println(iter.next());
+//        iter.remove();
+////        while(iter.hasNext()){
+////            System.out.println(iter.next());
+////        }
+////        System.out.println("-----------------------------------");
+//
+//        System.out.println("-----------------------------------");
+//        while (iter.hasNext()) {
+//            System.out.println(iter.next().toString());
 //        }
 //        System.out.println("-----------------------------------");
-
-        System.out.println("-----------------------------------");
-        while (iter.hasNext()) {
-            System.out.println(iter.next());
-        }
-        System.out.println("-----------------------------------");
 
 
     }

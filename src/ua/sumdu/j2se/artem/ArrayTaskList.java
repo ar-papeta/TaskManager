@@ -1,8 +1,8 @@
 package ua.sumdu.j2se.artem;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.AbstractList;
 
 
 public class ArrayTaskList extends TaskList implements Iterable<Task> {
@@ -47,6 +47,19 @@ public class ArrayTaskList extends TaskList implements Iterable<Task> {
     }
 
     @Override
+    public ArrayTaskList clone()
+            throws CloneNotSupportedException {
+        ArrayTaskList result = (ArrayTaskList) super.clone();
+        taskArray = ((Task[]) taskArray.clone());
+
+        for (int i = 0; i < size(); i++) {
+            taskArray[i] = taskArray[i].clone();
+        }
+
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -65,20 +78,8 @@ public class ArrayTaskList extends TaskList implements Iterable<Task> {
     @Override
     public String toString() {
         return "ArrayTaskList{" +
-                "list=" + Arrays.toString(list) +
+                "list=" + Arrays.toString(taskArray) +
                 '}';
-    }
-
-    public ArrayTaskList clone()
-            throws CloneNotSupportedException {
-        ArrayTaskList result = (ArrayTaskList) super.clone();
-        taskArray = ((Task[]) taskArray.clone());
-
-        for (int i = 0; i < size(); i++) {
-            taskArray[i] = taskArray[i].clone();
-        }
-
-        return result;
     }
 
     @Override
@@ -113,5 +114,4 @@ public class ArrayTaskList extends TaskList implements Iterable<Task> {
             }
         };
     }
-
 }

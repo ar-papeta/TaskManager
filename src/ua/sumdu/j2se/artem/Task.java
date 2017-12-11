@@ -171,15 +171,13 @@ public class Task implements Cloneable {
         return (Task) super.clone();
     }
 
+    @Override
     public String toString() {
         if (isRepeated()) {
-            return
-
-
-                    "\" " + getTitle() + "\" start time = " + getStartTime() + " end time = " + getEndTime() + " interval = " + getRepeatInterval() + " active = " + isActive();
+            return "\" " + getTitle() + "\" start in  " + getStartTime() + " end in " + getEndTime() + " with interval  "
+                            + getRepeatInterval() + " active is " + isActive();
         }
-
-        return "\" " + getTitle() + "\" " + getTime() + " active = " + isActive() + "\n";
+        return "\" " + getTitle() + "\" " + "in time " + + getTime() + " active is " + isActive() + "\n";
     }
 
     @Override

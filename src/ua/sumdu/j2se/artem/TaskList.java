@@ -6,7 +6,6 @@ import java.util.*;
 public abstract class TaskList implements Cloneable, Iterable<Task> {
 
     protected Task[] list = new Task[10];
-    public static int EXTRA_SIZE = 5;//x0.75
     protected int size;
 
     public abstract void add(Task task);
