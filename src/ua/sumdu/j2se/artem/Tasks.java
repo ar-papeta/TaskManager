@@ -3,8 +3,8 @@ package ua.sumdu.j2se.artem;
 import java.util.*;
 
 public class Tasks {
-    public static Iterable<Task> incoming(Iterable<Task> tasks, Date start, Date end){
-        if(start.before(new Date(0)) || end.before(start))
+    public static Iterable<Task> incoming(Iterable<Task> tasks, Date start, Date end) {
+        if (start.before(new Date(0)) || end.before(start))
             throw new IllegalArgumentException("Invalid start or end");
         if ((tasks == null) || (start == null) || (end == null))
             throw new IllegalArgumentException("Null argument");
@@ -26,7 +26,7 @@ public class Tasks {
         return incomingList;
     }
 
-    public static SortedMap<Date, Set<Task>> calendar(Iterable<Task> tasks, Date start, Date end){
+    public static SortedMap<Date, Set<Task>> calendar(Iterable<Task> tasks, Date start, Date end) {
         if ((tasks == null) || (start == null) || (end == null)) {
             throw new IllegalArgumentException("null argument");
         }
@@ -37,7 +37,7 @@ public class Tasks {
         Iterable<Task> incomingList = incoming(tasks, start, end);
         for (Task task : incomingList) {
             Date keyDate = task.nextTimeAfter(start);
-            while(keyDate != null && keyDate.compareTo(end) <= 0) {
+            while (keyDate != null && keyDate.compareTo(end) <= 0) {
                 if (calendar.containsKey(keyDate)) {
                     calendar.get(keyDate).add(task);
                 } else {
