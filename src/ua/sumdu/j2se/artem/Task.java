@@ -111,30 +111,56 @@ public class Task implements Cloneable,Serializable {
         return this.interval;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Task)) return false;
+
+        Task task = (Task) o;
+
+        if (interval != task.interval) return false;
+        if (active != task.active) return false;
+        if (title != null ? !title.equals(task.title) : task.title != null) return false;
+        if (time != null ? !time.equals(task.time) : task.time != null) return false;
+        if (start != null ? !start.equals(task.start) : task.start != null) return false;
+        return end != null ? end.equals(task.end) : task.end == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (start != null ? start.hashCode() : 0);
+        result = 31 * result + (end != null ? end.hashCode() : 0);
+        result = 31 * result + interval;
+        result = 31 * result + (active ? 1 : 0);
+        return result;
+    }
+
     /**
      * @return time of the next alerts
      */
     public Date nextTimeAfter(Date time) {
         if (!active) {
-            return new Date(-1);
+            return null;
         }
         if (!isRepeated()) {
             if (time.before(this.time))
                 return this.time;
             else
-                return new Date(-1);
+                return null;
         } else {
             if (time.after(this.end))
-                return new Date(-1);
+                return null;
             else {
-                Date alertTime = this.start;
-                while (alertTime.before(time)) {
-                    alertTime.setTime(alertTime.getTime()+this.interval);
+                Date alertTime = (Date)start.clone();
+                while (alertTime.compareTo(time) <= 0) {
+                    alertTime.setTime(alertTime.getTime() + getRepeatInterval() * 1000);
                 }
-                if (alertTime.before(this.end))
+                if (alertTime.getTime() <= end.getTime())
                     return alertTime;
                 else
-                    return new Date(-1);
+                    return null;
             }
         }
     }
@@ -183,29 +209,4 @@ public class Task implements Cloneable,Serializable {
         return " " + getTitle() + " " + "in time " +  getTime() + " (active is " + isActive() + ")\n";
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Task)) return false;
-
-        Task task = (Task) o;
-
-        if (interval != task.interval) return false;
-        if (active != task.active) return false;
-        if (!title.equals(task.title)) return false;
-        if (!time.equals(task.time)) return false;
-        if (!start.equals(task.start)) return false;
-        return end.equals(task.end);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = title.hashCode();
-        result = 31 * result + time.hashCode();
-        result = 31 * result + start.hashCode();
-        result = 31 * result + end.hashCode();
-        result = 31 * result + interval;
-        result = 31 * result + (active ? 1 : 0);
-        return result;
-    }
 }

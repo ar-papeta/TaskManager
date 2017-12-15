@@ -3,33 +3,49 @@ package ua.sumdu.j2se.artem;
 import java.util.*;
 
 public class Tasks {
-    static Iterable<Task> incoming(Iterable<Task> tasks, Date start, Date end){
-//        if(start < 0 || end < 0 || start > end)
-//            throw new IllegalArgumentException("Invalid value(s)");
+    public static Iterable<Task> incoming(Iterable<Task> tasks, Date start, Date end){
+        if(start.before(new Date(0)) || end.before(start))
+            throw new IllegalArgumentException("Invalid start or end");
+        if ((tasks == null) || (start == null) || (end == null))
+            throw new IllegalArgumentException("Null argument");
 
-        ArrayTaskList incomingTasks = new ArrayTaskList();
-        for (Task task: tasks) {
-            if(!task.getStartTime().before(start) && !task.getEndTime().after(end))
-                incomingTasks.add(task);
+        TaskList incomingList = null;
+        if ((tasks instanceof ArrayTaskList)) {
+            incomingList = new ArrayTaskList();
+        } else {
+            incomingList = new LinkedTaskList();
         }
-        return incomingTasks;
+        for (Task task : tasks) {
+            if (task.isActive()) {
+                Date data = task.nextTimeAfter(start);
+                if ((data != null) && (data.compareTo(end) <= 0)) {
+                    incomingList.add(task);
+                }
+            }
+        }
+        return incomingList;
     }
 
-    static SortedMap<Date, Set<Task>> calendar(Iterable<Task> tasks, Date start, Date end){
-
+    public static SortedMap<Date, Set<Task>> calendar(Iterable<Task> tasks, Date start, Date end){
+        if ((tasks == null) || (start == null) || (end == null)) {
+            throw new IllegalArgumentException("null argument");
+        }
+        if (start.after(end)) {
+            throw new IllegalArgumentException("From can not be greater than to");
+        }
         TreeMap<Date, Set<Task>> calendar = new TreeMap<Date, Set<Task>>();
-        Iterable<Task> inc = incoming(tasks, start, end);
-        for (Task task : inc) {
-            Date tmp = task.nextTimeAfter(start);
-            while(tmp != null && tmp.after(end)) {
-                if (calendar.containsKey(tmp)) {
-                    calendar.get(tmp).add(task);
+        Iterable<Task> incomingList = incoming(tasks, start, end);
+        for (Task task : incomingList) {
+            Date keyDate = task.nextTimeAfter(start);
+            while(keyDate != null && keyDate.compareTo(end) <= 0) {
+                if (calendar.containsKey(keyDate)) {
+                    calendar.get(keyDate).add(task);
                 } else {
-                    Set<Task> setOfTasks = new HashSet<Task>();
-                    setOfTasks.add(task);
-                    calendar.put(tmp, setOfTasks);
+                    Set<Task> tasksSet = new HashSet<Task>();
+                    tasksSet.add(task);
+                    calendar.put(keyDate, tasksSet);
                 }
-                tmp = task.nextTimeAfter(tmp);
+                keyDate = task.nextTimeAfter(keyDate);
             }
         }
         return calendar;
