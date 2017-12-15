@@ -110,7 +110,7 @@ public class LinkedTaskList extends TaskList implements Cloneable, Iterable<Task
             this.next = next;
         }
     }
-    
+
     @Override
     public String toString() {
         Iterator<Task> it = iterator();
@@ -129,12 +129,18 @@ public class LinkedTaskList extends TaskList implements Cloneable, Iterable<Task
     }
 
     @Override
-    public LinkedTaskList clone() {
-        LinkedTaskList out = new LinkedTaskList();
-        if (size() > 0)
-            for (Task task : this)
-                out.add(task);
-        return out;
+    public LinkedTaskList clone(){
+        //       LinkedTaskList out = new LinkedTaskList();
+        //       if(size() > 0)
+        //           for (Task task : this)
+        //               out.add(task);
+
+        try {
+            return (LinkedTaskList)super.clone();
+        }
+        catch( CloneNotSupportedException ex ) {
+            throw new InternalError();
+        }
     }
 
     @Override

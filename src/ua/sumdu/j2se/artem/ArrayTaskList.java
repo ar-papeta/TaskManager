@@ -50,7 +50,7 @@ public class ArrayTaskList extends TaskList implements Iterable<Task> {
     public ArrayTaskList clone()
             throws CloneNotSupportedException {
         ArrayTaskList result = (ArrayTaskList) super.clone();
-        taskArray = ((Task[]) taskArray.clone());
+        taskArray = ((Task[])taskArray.clone());
 
         for (int i = 0; i < size(); i++) {
             taskArray[i] = taskArray[i].clone();

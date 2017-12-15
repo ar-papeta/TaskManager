@@ -1,16 +1,17 @@
 package ua.sumdu.j2se.artem;
 
+import java.util.Date;
 import java.util.Iterator;
 
 public class Main {
 
     public static void main(String[] args) {
-        Task t1 = new Task("Task1", 1);
-        Task t2 = new Task("Task2", 2);
-        Task t3 = new Task("Task3", 3);
-        Task t4 = new Task("Task4", 4);
-        Task t5 = new Task("Task5", 1, 10, 2);
-        Task t6 = new Task("Task6", 1, 100, 1);
+        Task t1 = new Task("Task1", new Date(1));
+        Task t2 = new Task("Task2", new Date(2));
+        Task t3 = new Task("Task3", new Date(3));
+        Task t4 = new Task("Task4", new Date(5));
+        Task t5 = new Task("Task5", new Date(4), new Date(10), 2);
+        Task t6 = new Task("Task6", new Date(7), new Date(100), 1);
 
         LinkedTaskList l = new LinkedTaskList();
         ArrayTaskList a = new ArrayTaskList();

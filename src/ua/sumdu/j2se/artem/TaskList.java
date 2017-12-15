@@ -18,7 +18,7 @@ public abstract class TaskList implements Cloneable, Iterable<Task> {
 
     public abstract Task getTask(int index);
 
-    public TaskList incoming(int from, int to) {
+    public TaskList incoming(Date from, Date to) {
         TaskList incomingList;
         if ((this instanceof ArrayTaskList)) {
             incomingList = new ArrayTaskList();
@@ -27,7 +27,7 @@ public abstract class TaskList implements Cloneable, Iterable<Task> {
         }
         for (int i = 0; i < size(); i++) {
             if (getTask(i).isActive()) {
-                if (getTask(i).nextTimeAfter(from) > from && getTask(i).nextTimeAfter(from) <= to)
+                if (getTask(i).nextTimeAfter(from).after(from) && (getTask(i).nextTimeAfter(from) == to || getTask(i).nextTimeAfter(from).before(to)))
                     incomingList.add(getTask(i));
             }
         }
